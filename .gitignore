@@ -2,6 +2,16 @@
 
 # dependencies
 /node_modules
+/.firebase
+/.idea
+/.git
+
+.firebaserc
+firebase
+firebase.json
+firebase hosting
+info.txt
+
 /.pnp
 .pnp.js
 
