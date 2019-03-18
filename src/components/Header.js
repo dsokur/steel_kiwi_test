@@ -14,7 +14,7 @@ const Header = props => {
 				<ul>
 					<h2>Steel Kiwi test App</h2>
 					<li><Link to='/'>home</Link></li>
-					<li onClick={props.showMessage}><Link to='/search/:search'>search</Link></li>
+					<li><Link to='/search/'>search</Link></li>
 				</ul>
 			</nav>
 			{

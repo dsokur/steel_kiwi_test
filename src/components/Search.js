@@ -51,7 +51,7 @@ export default class Search extends Component {
 					handleSubmit:this.handleSubmit,
 				}}>
 					<Switch>
-						<Route exact path={`${this.props.match.path}/:search`} render={(props) => (
+						<Route exact path={`${this.props.match.path}`} render={(props) => (
 							<Suspense fallback={
 								<img alt='loader'
 								     className='loader'

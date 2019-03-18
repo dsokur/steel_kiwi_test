@@ -22,15 +22,12 @@ export default class App extends Component {
 			this.setState({isSignedIn: !!user});
 		})
 	};
-	showMessage=()=>{
-		return this.state.isSignedIn ? '' : 'please login to get access to search page'
-	};
 
 	render() {
 		const {isSignedIn} = this.state;
 		return (
 			<>
-				<Header isSignedIn={isSignedIn} showMessage={this.showMessage}/>
+				<Header isSignedIn={isSignedIn}/>
 				<Switch>
 					<Route exact path='/' render={(props) => (
 						<Suspense fallback={
@@ -39,7 +36,7 @@ export default class App extends Component {
 							     src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"
 							/>
 						}>
-							<HomePage showMessage={this.showMessage} sSignedIn={isSignedIn} {...props}/>
+							<HomePage sSignedIn={isSignedIn} {...props}/>
 						</Suspense>)}
 					/>
 					<Route path='/search' render={(props) => (
