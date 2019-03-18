@@ -45,8 +45,6 @@ export default class Search extends Component {
 
 
 	render() {
-		// console.log('pathname', this.props.pathname);
-		console.log('search', this.props);
 		return (
 			<AppContext.Provider
 				value={{

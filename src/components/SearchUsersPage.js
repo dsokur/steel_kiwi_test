@@ -31,9 +31,36 @@ export default class SearchComponent extends Component {
 		}
 		return false;
 	}
-
+	renderCardMode=(users)=>(
+		<div className='search_result'>
+			{users.map(user => (
+				<div key={user.id} className='search_result-user'>
+					<span><strong>User login:</strong>{user.login}</span>
+					<Link to={`${this.props.match.path}/${user.login}`}>Details</Link>
+					<a href={user.html_url} rel='noopener noreferrer' target='_blank'>GitHub page”</a>
+				</div>
+			))}
+		</div>
+	);
+	renderTableMode=(users)=>(
+		<table border='1' cellPadding='5'>
+			<tbody>
+			<tr>
+				<th>User login:</th>
+				<th>Details</th>
+				<th>GitHub page</th>
+			</tr>
+			{users.map(user => (
+				<tr key={user.id}>
+					<td><span><strong>User login:</strong>{user.login}</span></td>
+					<td><Link to={`${this.props.match.path}/${user.login}`}>Details</Link></td>
+					<td><a href={user.html_url} rel='noopener noreferrer' target='_blank'>GitHub page”</a></td>
+				</tr>
+			))}
+			</tbody>
+		</table>
+	);
 	render() {
-
 		return (
 			<section className='search'>
 				<div className='search_form'>
@@ -48,32 +75,9 @@ export default class SearchComponent extends Component {
 				{
 					this.state.cardMode
 						?
-						<div className='search_result'>
-							{this.context.users.map(user => (
-								<div key={user.id} className='search_result-user'>
-									<span><strong>User login:</strong>{user.login}</span>
-									<Link to={`${this.props.match.path}/${user.login}`}>Details</Link>
-									<a href={user.html_url} rel='noopener noreferrer' target='_blank'>GitHub page”</a>
-								</div>
-							))}
-						</div>
+						this.renderCardMode(this.context.users)
 						:
-						<table border='1' cellPadding='5'>
-							<tbody>
-							<tr>
-								<th>User login:</th>
-								<th>Details</th>
-								<th>GitHub page</th>
-							</tr>
-							{this.context.users.map(user => (
-								<tr key={user.id}>
-									<td><span><strong>User login:</strong>{user.login}</span></td>
-									<td><Link to={`${this.props.match.path}/${user.login}`}>Details</Link></td>
-									<td><a href={user.html_url} rel='noopener noreferrer' target='_blank'>GitHub page”</a></td>
-								</tr>
-							))}
-							</tbody>
-						</table>
+						this.renderTableMode(this.context.users)
 				}
 			</section>
 		)

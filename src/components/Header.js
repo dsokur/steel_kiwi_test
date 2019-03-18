@@ -17,26 +17,26 @@ const Header = props => {
 					<li><Link to='/search'>search</Link></li>
 				</ul>
 			</nav>
-			{
-				props.isSignedIn
-					?
-					<div className='profile'>
+			<div className='profile'>
+				{
+					props.isSignedIn
+						?
 						<p>{firebase.auth().currentUser.displayName}</p>
-						<div className='profilePic'>
-							<img alt='profile' src={firebase.auth().currentUser.photoURL}/>
-						</div>
-						<button onClick={() => firebase.auth().signOut()}>Sign out!</button>
-					</div>
-					:
-					<div className='profile'>
+						:
 						<p>please login</p>
-						<div className='profilePic'>
-							<img alt='profile' src={anonymous}/>
-						</div>
+				}
+				<div className='profilePic'>
+					<img alt='profile' src={props.isSignedIn ? firebase.auth().currentUser.photoURL : anonymous}/>
+				</div>
+				{
+					props.isSignedIn
+						?
+						<button onClick={() => firebase.auth().signOut()}>Sign out!</button>
+						:
 						<button onClick={() => firebase.auth().signInWithPopup(provider).then((result) => {
 						}).catch((error) => (error))}>Sign in!</button>
-					</div>
-			}
+				}
+			</div>
 		</header>
 	)
 };
