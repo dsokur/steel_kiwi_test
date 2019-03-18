@@ -4,7 +4,7 @@ import './App.scss';
 import AppContext from './../app-context';
 
 
-export default class SearchUsersPage extends Component {
+export default class SearchComponent extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -22,23 +22,41 @@ export default class SearchUsersPage extends Component {
 		});
 	};
 
+	shouldComponentUpdate(nextProps, nextState) {
+		if (this.state.toggleLayout !== nextState.toggleLayout) {
+			return true;
+		}
+		if (this.props.match.path !== nextProps.match.path) {
+			return true;
+		}
+		return false;
+	}
+
 	render() {
+		const queryParameters = this.props.location.search;
+		const params = new URLSearchParams(queryParameters);
+		const foo = params.get('text');
+		console.log('foo', foo);
 		return (
 			<section className='search'>
-				<form onChange={e => this.context.handleSubmit(e, this.refs.username.value)}>
+				<div className='search_form'>
 					<p>Search</p>
-					<input type="text" ref='username' placeholder='username'/>
-					<button onClick={this.toggleLayout}>switch mode</button>
-				</form>
+					<form onChange={e => this.context.handleSubmit(e, this.refs.username.value)}>
+						<input type="text" ref='username' placeholder='username'/>
+					</form>
+					<button onClick={this.toggleLayout}>
+						switch to {this.state.toggleLayout ? 'table' : 'card'} mode
+					</button>
+				</div>
 				{
 					this.state.toggleLayout
 						?
-						<div className='result'>
+						<div className='search_result'>
 							{this.context.users.map(user => (
-								<div key={user.id} className='user'>
-									<span><strong>User login:</strong> {user.login}</span>
+								<div key={user.id} className='search_result-user'>
+									<span><strong>User login:</strong>{user.login}</span>
 									<Link to={`${this.props.match.path}/${user.login}`}>Details</Link>
-									<a href={user.html_url} rel="noopener noreferrer" target='_blank'>GitHub page</a>
+									<a href={user.html_url} rel="noopener noreferrer" target='_blank'>GitHub page”</a>
 								</div>
 							))}
 						</div>
@@ -52,9 +70,9 @@ export default class SearchUsersPage extends Component {
 							</tr>
 							{this.context.users.map(user => (
 								<tr key={user.id}>
-									<td><span><strong>User login:</strong> {user.login}</span></td>
+									<td><span><strong>User login:</strong>{user.login}</span></td>
 									<td><Link to={`${this.props.match.path}/${user.login}`}>Details</Link></td>
-									<td><a href={user.html_url} rel="noopener noreferrer" target='_blank'>GitHub page</a></td>
+									<td><a href={user.html_url} rel="noopener noreferrer" target='_blank'>GitHub page”</a></td>
 								</tr>
 							))}
 							</tbody>

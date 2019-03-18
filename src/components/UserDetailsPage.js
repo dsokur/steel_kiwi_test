@@ -25,7 +25,6 @@ export default class UserDetailsPage extends Component {
 			this.getUser(this.props.match.params.login);
 		}
 	}
-
 	render() {
 		return (
 			<div className='userDetails'>
@@ -42,7 +41,7 @@ export default class UserDetailsPage extends Component {
 					</svg>
 					<p>{this.state.user.location}</p>
 				</div>
-				<p>{this.state.user.created_at}</p>
+				<p>{new Date(this.state.user.created_at).toLocaleString()}</p>
 				<div>
 					<svg height="16" className="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="16"
 					     aria-hidden="true">

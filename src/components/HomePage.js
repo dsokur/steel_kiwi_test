@@ -1,9 +1,9 @@
 import React from "react";
 
-const HomePage = props => {
+const HomePage = () => {
 	return (
 		<>
-			<h1>HOMEPAGE</h1>
+			<h1 className='home'>HOMEPAGE</h1>
 		</>
 	);
 };

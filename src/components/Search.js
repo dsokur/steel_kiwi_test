@@ -1,7 +1,9 @@
 import React, {Component, lazy, Suspense} from "react";
 import {Switch, Route, Redirect} from 'react-router-dom';
+import stringifyQuery from 'query-string';
+import parseQueryString from 'query-string';
+
 import './App.scss';
-import _ from 'lodash';
 import AppContext from './../app-context';
 
 const Users = lazy(() => import('./UserDetailsPage'));
@@ -14,21 +16,26 @@ export default class Search extends Component {
 		this.state = {
 			users: []
 		};
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleSubmit = _.debounce(this.handleSubmit, 250);
+		const debounceEvent = (callback, time, interval) =>
+			(...args) => clearTimeout(interval, interval = setTimeout(callback, time, ...args));
+		this.handleSubmit = debounceEvent(this.handleSubmit.bind(this), 1000);
 	}
 
 	getUsers=(username)=> {
 		return fetch(`https://api.github.com/search/users?per_page=10&q=${username}`)
 			.then(response => response.json())
 			.then(response => {
+				this.props.push({
+					pathname: this.props.location.pathname,
+					search: stringifyQuery(Object.assign({}, parseQueryString(this.props.location.search), { text: username }))
+				});
 				return response;
 			}).catch(error => {
 				return error
 			});
 	};
 
-	async handleSubmit(e,username) {
+	async handleSubmit(e,username){
 		e.persist();
 		let users = await this.getUsers(username);
 		users.items === undefined
@@ -44,6 +51,8 @@ export default class Search extends Component {
 
 
 	render() {
+		// console.log('pathname', this.props.pathname);
+		console.log('search', this.props);
 		return (
 			<AppContext.Provider
 				value={{
