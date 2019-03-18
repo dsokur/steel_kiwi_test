@@ -1,7 +1,5 @@
-import React, {Component, lazy, Suspense} from "react";
+import React, {Component, lazy, Suspense} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
-import stringifyQuery from 'query-string';
-import parseQueryString from 'query-string';
 
 import './App.scss';
 import AppContext from './../app-context';
@@ -25,10 +23,6 @@ export default class Search extends Component {
 		return fetch(`https://api.github.com/search/users?per_page=10&q=${username}`)
 			.then(response => response.json())
 			.then(response => {
-				this.props.push({
-					pathname: this.props.location.pathname,
-					search: stringifyQuery(Object.assign({}, parseQueryString(this.props.location.search), { text: username }))
-				});
 				return response;
 			}).catch(error => {
 				return error
@@ -38,7 +32,7 @@ export default class Search extends Component {
 	async handleSubmit(e,username){
 		e.persist();
 		let users = await this.getUsers(username);
-		users.items === undefined
+		!users.items
 			?
 			this.setState({
 				users: [],
@@ -59,40 +53,40 @@ export default class Search extends Component {
 					users: this.state.users,
 					handleSubmit:this.handleSubmit,
 				}}>
-					<Switch>
-						<Route exact path={`${this.props.match.path}`} render={(props) => (
-							<Suspense fallback={
-								<img alt='loader'
-								     className='loader'
-								     src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"
-								/>
-							}>
-								{
-									this.props.isSignedIn === true
-										?
-										<SearchComponent {...props}/>
-										:
-										<Redirect to="/"/>
-								}
-							</Suspense>)}
-						/>
-						<Route path={`${this.props.match.path}/:login`} render={(props) => (
-							<Suspense fallback={
-								<img alt='loader'
-								     className='loader'
-								     src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"
-								/>
-							}>
-								{
-									this.props.isSignedIn === true
-										?
-										<Users users={this.state.users}{...props}/>
-										:
-										<Redirect to="/"/>
-								}
-							</Suspense>)}
-						/>
-					</Switch>
+				<Switch>
+					<Route exact path={`${this.props.match.path}`} render={(props) => (
+						<Suspense fallback={
+							<img alt='loader'
+							     className='loader'
+							     src='https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif'
+							/>
+						}>
+							{
+								this.props.isSignedIn
+									?
+									<SearchComponent {...props}/>
+									:
+									<Redirect to='/'/>
+							}
+						</Suspense>)}
+					/>
+					<Route path={`${this.props.match.path}/:login`} render={(props) => (
+						<Suspense fallback={
+							<img alt='loader'
+							     className='loader'
+							     src='https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif'
+							/>
+						}>
+							{
+								this.props.isSignedIn
+									?
+									<Users users={this.state.users}{...props}/>
+									:
+									<Redirect to='/'/>
+							}
+						</Suspense>)}
+					/>
+				</Switch>
 			</AppContext.Provider>
 		)
 	}

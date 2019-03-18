@@ -1,7 +1,7 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React from 'react';
+import {Link} from 'react-router-dom';
 import './App.scss';
-import firebase from "firebase";
+import firebase from 'firebase';
 import anonymous from './../assents/anonymous.png';
 
 
@@ -12,7 +12,7 @@ const Header = props => {
 		<header>
 			<nav>
 				<ul>
-					<h2>Steel Kiwi test App</h2>
+					<li><strong>Steel Kiwi test App</strong></li>
 					<li><Link to='/'>home</Link></li>
 					<li><Link to='/search'>search</Link></li>
 				</ul>
@@ -23,7 +23,7 @@ const Header = props => {
 					<div className='profile'>
 						<p>{firebase.auth().currentUser.displayName}</p>
 						<div className='profilePic'>
-							<img alt="profile" src={firebase.auth().currentUser.photoURL}/>
+							<img alt='profile' src={firebase.auth().currentUser.photoURL}/>
 						</div>
 						<button onClick={() => firebase.auth().signOut()}>Sign out!</button>
 					</div>
@@ -31,7 +31,7 @@ const Header = props => {
 					<div className='profile'>
 						<p>please login</p>
 						<div className='profilePic'>
-							<img alt="profile" src={anonymous}/>
+							<img alt='profile' src={anonymous}/>
 						</div>
 						<button onClick={() => firebase.auth().signInWithPopup(provider).then((result) => {
 						}).catch((error) => (error))}>Sign in!</button>
