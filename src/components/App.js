@@ -46,13 +46,15 @@ export default class App extends Component {
 							     src='https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif'
 							/>
 						}>
-							{
-								isSignedIn
-									?
-									<Search isSignedIn={isSignedIn}{...props}/>
-									:
-									<Redirect to='/'/>
-							}
+							<Search isSignedIn={isSignedIn}{...props}/>
+							{/*{*/}
+								{/*isSignedIn*/}
+									{/*?*/}
+									{/*<Search isSignedIn={isSignedIn}{...props}/>*/}
+									{/*:*/}
+									{/*<Redirect to='/'/>*/}
+									{/**/}
+							{/*}*/}
 						</Suspense>)}
 					/>
 				</Switch>

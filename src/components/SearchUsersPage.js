@@ -37,11 +37,12 @@ export default class SearchComponent extends Component {
 				<div key={user.id} className='search_result-user'>
 					<span><strong>User login:</strong>{user.login}</span>
 					<Link to={`${this.props.match.path}/${user.login}`}>Details</Link>
-					<a href={user.html_url} rel='noopener noreferrer' target='_blank'>GitHub page”</a>
+					<a href={user.html_url} rel='noopener noreferrer' target='_blank'>GitHub page</a>
 				</div>
 			))}
 		</div>
 	);
+
 	renderTableMode=(users)=>(
 		<table border='1' cellPadding='5'>
 			<tbody>
@@ -54,7 +55,7 @@ export default class SearchComponent extends Component {
 				<tr key={user.id}>
 					<td><span><strong>User login:</strong>{user.login}</span></td>
 					<td><Link to={`${this.props.match.path}/${user.login}`}>Details</Link></td>
-					<td><a href={user.html_url} rel='noopener noreferrer' target='_blank'>GitHub page”</a></td>
+					<td><a href={user.html_url} rel='noopener noreferrer' target='_blank'>GitHub page</a></td>
 				</tr>
 			))}
 			</tbody>
